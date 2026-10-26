@@ -1,0 +1,53 @@
+You are editing the WavesOS marketing site in this monorepo. The main app is `artifacts/wavesos-site` (React + Vite + Tailwind). Almost all landing UI is in `src/App.tsx` with styles in `src/index.css`. Do NOT break the install/download links, theme toggle, or footer social links.
+
+## Product positioning
+WavesOS is an Arch Linux + Hyprland rice installer (WavesHyprland), not a full distro like Omarchy. Compete with polished rice/desktop sites (ryoku.dev, noctalia.dev): clear hero, proof of the desktop, tight stack, one install path. Keep the design simple but maximalist-futuristic: dark-first, one accent color, large type, glass/grid sparingly, no clutter.
+
+## Performance crisis (must fix)
+Current metrics are unacceptable:
+- Grade C / Score ~55%
+- Transfer size ~2.4MB
+- TTFB ~523ms
+- LCP ~16.9s
+- FCP ~15.9s
+- Speed Index ~16.4s
+- TTI ~16.6s
+- TBT ~45ms (OK)
+- CLS 0 (keep this)
+
+Goals after your changes (production build):
+- LCP under 2.5s on a typical broadband mobile/desktop test when assets are reasonable
+- Much smaller JS/CSS; avoid shipping unused UI libraries on the critical path
+- Hero image optimized (prefer WebP/AVIF, correct dimensions, fetchpriority only on true LCP image)
+- Defer non-critical JS; no huge blocking bundles on first paint
+- `vite.config.ts`: default `PORT` to 5173 and `BASE_PATH` to `/` when env vars are missing so local/prod don’t crash
+- Production build output stays under `artifacts/wavesos-site/dist/public`
+- Lazy-load below-the-fold images; use width/height to protect CLS
+- Strip or tree-shake unused Radix/shadcn UI deps if the landing page doesn’t use them (don’t delete files blindly if other routes need them—prefer not importing heavy UI on the home page)
+- Ensure fonts are limited (1–2 families), use font-display: swap
+- Prefer CSS/Tailwind already in the project; avoid adding large new animation libraries
+
+## Content / UX changes (no product screenshots yet)
+I will add real rice preview images later. For now:
+1. Keep structure: topbar → hero → signal strip → experience → stack → install → closing → footer.
+2. Strengthen hero copy toward: finished Hyprland desktop / colors from wallpaper / installer that feels like a DE. Optional slogan direction: “Not less than a desktop environment” or “One wallpaper. The whole system listens.” Keep tone confident and short.
+3. In “experience”, add a clear placeholder gallery grid (3–6 slots) with labeled empty states like “Desktop · Waybar · Rofi · Lock · SDDM · Light/Dark” so I can drop images in later without restructuring.
+4. Expand stack slightly to reflect the real rice when accurate: Hyprland (Lua configs), Matugen, Wallfliper, Waybar multi-layout, Rofi themes, theme-switch (GTK + Kvantum + icons), Thunar + Relax GTK, qylock SDDM, Hyprlock, Kitty—without making a wall of text.
+5. Install section: keep `./install.sh` and `./install.sh --all`, normal user, sudo only when needed. Link to https://github.com/WavesOS-Repos/WavesHyprland
+6. Keep download ZIP behavior (GitHub zip or local manifest via existing download-source helpers).
+7. Keep Discord / Reddit / GitHub footer links and credit “Developed by Tarang Verma”.
+8. Dark/light theme toggle must remain.
+
+## What not to do
+- Don’t depend on the API server or Postgres for the landing page.
+- Don’t add autoplay video/audio.
+- Don’t add a heavy blog, plugin marketplace, or Omarchy-style hype walls.
+- Don’t require Replit-only env vars without defaults.
+- Don’t use massive uncompressed PNG/JPG as the LCP element.
+
+## Deliverables
+1. Apply code changes in `artifacts/wavesos-site` (and minimal shared config if needed).
+2. Summarize what you changed for performance vs UX.
+3. List exact files touched.
+4. Tell me where to drop future preview images (paths + recommended sizes).
+5. Give the exact commands to production-build and preview locally with PORT/BASE_PATH.

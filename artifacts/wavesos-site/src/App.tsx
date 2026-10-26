@@ -15,10 +15,8 @@ import {
   Waypoints,
 } from 'lucide-react';
 import { SiDiscord, SiGithub, SiReddit } from 'react-icons/si';
-import logoPath from '../../../attached_assets/logo_1792936887677.jpg';
 import { localArchiveFilename } from '@/download-source';
-import NotFound from '@/pages/not-found';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { previews } from '@/preview-manifest';
 
 const GITHUB_ZIP_URL = 'https://github.com/WavesOS-Repos/WavesHyprland/archive/refs/heads/main.zip';
 const ZIP_URL = localArchiveFilename
@@ -30,19 +28,35 @@ const REDDIT_URL = 'https://www.reddit.com/r/WavesOS/';
 const DOWNLOAD_FILENAME = localArchiveFilename ?? undefined;
 const WALLPAPER_WEBP_URL = `${import.meta.env.BASE_URL}wavesos-wallpaper.webp`;
 const WALLPAPER_JPEG_URL = `${import.meta.env.BASE_URL}wavesos-wallpaper.jpg`;
+const LOGO_URL = `${import.meta.env.BASE_URL}wavesos-logo.jpg`;
 
 function Home() {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    return window.localStorage.getItem('wavesos-theme') !== 'light';
-  });
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    let nextIsDark = true;
+    try {
+      nextIsDark = window.localStorage.getItem('wavesos-theme') !== 'light';
+    } catch {
+      // The theme toggle still works for this session when storage is blocked.
+    }
+    setIsDark(nextIsDark);
+    document.documentElement.classList.toggle('dark', nextIsDark);
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
-    window.localStorage.setItem('wavesos-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  const toggleTheme = () => setIsDark((value) => !value);
+  const toggleTheme = () => setIsDark((value) => {
+    const nextIsDark = !value;
+    try {
+      window.localStorage.setItem('wavesos-theme', nextIsDark ? 'dark' : 'light');
+    } catch {
+      // Keep the current theme even if this browser blocks local storage.
+    }
+    return nextIsDark;
+  });
   const external = { target: '_blank', rel: 'noreferrer' };
 
   return (
@@ -50,7 +64,7 @@ function Home() {
       <header className="topbar">
         <div className="container nav-inner">
           <a className="brand" href="#top" aria-label="WavesOS home" data-testid="link-home">
-            <img src={logoPath} alt="WavesOS glowing W mark" />
+            <img src={LOGO_URL} alt="WavesOS glowing W mark" width={38} height={38} />
             <span>WavesOS<small>Arch + Hyprland rice</small></span>
           </a>
           <nav className="nav-links" aria-label="Main navigation">
@@ -92,7 +106,7 @@ function Home() {
           <div className="eyebrow"><i className="live-dot" /> Arch Linux · Hyprland · WavesOS installer</div>
           <h1>Your system.<br /><span>In its element.</span></h1>
           <p className="hero-copy">
-            WavesOS is an Arch Linux Hyprland rice installer for a desktop that feels considered from the first boot. One focused setup, ready to make your own.
+            WavesOS turns Hyprland into a finished desktop: one wallpaper sets the colors, while a focused installer brings the whole workflow together.
           </p>
           <div className="hero-buttons">
             <a className="button" href={ZIP_URL} download={DOWNLOAD_FILENAME} data-testid="link-download-hero">
@@ -154,6 +168,28 @@ function Home() {
             </article>
           </div>
         </div>
+        <div className="preview-gallery" aria-label="WavesOS desktop preview gallery">
+          {previews.map((preview) => (
+            <figure className="preview-card" key={preview.label}>
+              {preview.file ? (
+                <img
+                  className="preview-image"
+                  src={`${import.meta.env.BASE_URL}previews/${preview.file}`}
+                  alt={`${preview.label} screenshot of the WavesOS desktop`}
+                  width={1200}
+                  height={750}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div className="preview-empty" aria-label={`${preview.label} preview coming soon`}>
+                  <span>Preview coming soon</span>
+                </div>
+              )}
+              <figcaption className="preview-caption">{preview.label}</figcaption>
+            </figure>
+          ))}
+        </div>
       </section>
 
       <section className="section stack-section" id="stack">
@@ -167,14 +203,15 @@ function Home() {
           </div>
           <div className="stack-grid">
             {[
-              ['01', 'Hyprland', 'Dynamic Wayland compositor'],
-              ['02', 'Matugen', 'Palette generation from your wallpaper'],
-              ['03', 'Wallfliper', 'Wallpaper rotation and discovery'],
-              ['04', 'Thunar', 'Practical file management'],
-              ['05', 'Relax GTK', 'A cohesive GTK appearance'],
-              ['06', 'Waybar + Rofi', 'Status, launch, and switch'],
-              ['07', 'wlogout + Hyprlock', 'Logout controls and lock screen'],
-              ['08', 'Conky + qylock', 'Desktop detail and SDDM greeter'],
+              ['01', 'Hyprland + Lua', 'A tuned Wayland compositor and Lua-based configuration'],
+              ['02', 'Matugen + Wallfliper', 'Wallpaper-led colors and wallpaper rotation'],
+              ['03', 'Waybar', 'Multiple bar layouts for different workflows'],
+              ['04', 'Rofi', 'Matching launcher and menu themes'],
+              ['05', 'Theme switch', 'GTK, Kvantum, and icon themes stay coordinated'],
+              ['06', 'Thunar + Relax GTK', 'Practical file management with a consistent GTK style'],
+              ['07', 'Hyprlock', 'A lock screen that fits the desktop'],
+              ['08', 'qylock + SDDM', 'Login and session details'],
+              ['09', 'Kitty', 'A fast terminal for the workflow'],
             ].map(([number, name, description]) => (
               <article className="stack-item" key={number} data-testid={`stack-item-${number}`}>
                 <span className="stack-number">{number} / COMPONENT</span>
@@ -234,7 +271,7 @@ function Home() {
       <footer className="footer">
         <div className="container footer-inner">
           <a className="brand" href="#top" data-testid="link-footer-home">
-            <img src={logoPath} alt="" />
+            <img src={LOGO_URL} alt="" width={38} height={38} />
             <span>WavesOS<small>Arch + Hyprland rice</small></span>
           </a>
           <div className="footer-credit">Developed by <strong>Tarang Verma</strong></div>
@@ -260,14 +297,7 @@ function Home() {
 }
 
 function App() {
-  return (
-    <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route component={NotFound} />
-      </Switch>
-    </WouterRouter>
-  );
+  return <Home />;
 }
 
 export default App;
