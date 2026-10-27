@@ -1,0 +1,1 @@
+export const previews = [{"label":"Desktop overview","file":null},{"label":"Waybar layouts","file":null},{"label":"Rofi launcher","file":null},{"label":"Lock / SDDM","file":null},{"label":"Dark vs Light","file":null},{"label":"Terminal / Thunar","file":null}] as const;

@@ -1,1 +1,0 @@
-export const previews = [{"label":"Desktop","file":null},{"label":"Waybar","file":null},{"label":"Rofi","file":null},{"label":"Lock screen","file":null},{"label":"SDDM","file":null},{"label":"Light / dark themes","file":null}] as const;
