@@ -1,1 +1,1 @@
-export const localArchiveFilename: string | null = null;
+export const localArchiveFilename: string | null = 'wavesos-website.zip';

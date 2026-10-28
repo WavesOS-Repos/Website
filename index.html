@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/wavesos-logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#05080d" />
+    <title>WavesOS — Arch Linux + Hyprland Rice & Installer</title>
+    <meta name="description" content="WavesOS is a free, open-source Arch Linux + Hyprland rice. One installer sets up Waybar, Rofi, Matugen colors, GTK/Qt themes, Kitty, Hyprlock and SDDM." />
+    <meta name="keywords" content="WavesOS, WavesHyprland, Hyprland rice, Arch Linux Hyprland, Hyprland dotfiles, Hyprland installer, Wayland desktop, Waybar themes, Rofi themes, Matugen, Linux ricing" />
+    <meta name="author" content="Tarang Verma" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <meta property="og:site_name" content="WavesOS" />
+    <meta property="og:title" content="WavesOS — Arch Linux + Hyprland Rice & Installer" />
+    <meta property="og:description" content="WavesOS is a free, open-source Arch Linux + Hyprland rice. One installer sets up Waybar, Rofi, Matugen colors, GTK/Qt themes, Kitty, Hyprlock and SDDM." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wavesos.org/" />
+    <meta property="og:image" content="https://wavesos.org/wavesos-wallpaper-1280.webp" />
+    <meta property="og:image:alt" content="WavesOS Hyprland desktop wallpaper" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WavesOS — Arch Linux + Hyprland Rice & Installer" />
+    <meta name="twitter:description" content="WavesOS is a free, open-source Arch Linux + Hyprland rice. One installer sets up Waybar, Rofi, Matugen colors, GTK/Qt themes, Kitty, Hyprlock and SDDM." />
+    <meta name="twitter:image" content="https://wavesos.org/wavesos-wallpaper-1280.webp" />
+
+    <link rel="canonical" href="https://wavesos.org/" />
+    <link rel="preload" as="image" href="/wavesos-wallpaper-1280.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/wavesos-logo.jpg" type="image/jpeg" />
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "WavesOS",
+        "url": "https://wavesos.org",
+        "description": "WavesOS is a free, open-source Arch Linux + Hyprland rice. One installer sets up Waybar, Rofi, Matugen colors, GTK/Qt themes, Kitty, Hyprlock and SDDM."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "WavesOS (WavesHyprland)",
+        "applicationCategory": "DesktopEnhancementApplication",
+        "operatingSystem": "Arch Linux",
+        "url": "https://wavesos.org",
+        "image": "https://wavesos.org/wavesos-wallpaper-1280.webp",
+        "downloadUrl": "https://github.com/WavesOS-Repos/WavesHyprland/archive/refs/heads/main.zip",
+        "codeRepository": "https://github.com/WavesOS-Repos/WavesHyprland",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Person", "name": "Tarang Verma" }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "WavesOS",
+        "url": "https://wavesos.org",
+        "logo": "https://wavesos.org/wavesos-logo.jpg",
+        "sameAs": [
+          "https://github.com/WavesOS-Repos/WavesHyprland",
+          "https://www.reddit.com/r/WavesOS/",
+          "https://discord.gg/y3p9J4z75"
+        ]
+      }
+    ]
+    </script>
+
+    <script>
+      try {
+        if (localStorage.getItem('wavesos-theme') === 'light') {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="dark">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

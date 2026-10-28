@@ -1,5 +1,6 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
