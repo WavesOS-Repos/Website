@@ -1,29 +1,55 @@
-# Welcome to your Lovable project
+# WavesOS
 
-This project was built with [Lovable](https://lovable.dev).
+WavesOS is a free, open-source Arch Linux + Hyprland rice. One installer
+(`WavesHyprland`) sets up Waybar, Rofi, Matugen colours, GTK/Qt themes, Kitty,
+Hyprlock and SDDM in one pass, so the desktop is put together the first time it
+boots.
 
-## Build with Lovable
+- Site: **https://wavesos.org**
+- Source: **https://github.com/WavesOS-Repos/WavesHyprland**
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## Run it locally
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+You need Node.js 20 or newer.
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+npm install
 npm run dev
 ```
 
-## Built with
+Then open **http://localhost:8080**.
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+To use a different port:
+
+```sh
+PORT=3000 npm run dev
+```
+
+To serve the production build (faster, and no dev-server host checks, which is
+what you want when sharing through a tunnel like cloudflared or ngrok):
+
+```sh
+npm run build
+npm run preview
+```
+
+## Where things live
+
+```
+src/routes/index.tsx            page title, description, Open Graph tags, structured data
+src/routes/__root.tsx           theme (dark/light), favicon, shared <head>
+src/components/wavesos/         the whole landing page
+src/styles.css                  colours, type, and layout
+public/                         images, downloads, robots.txt, sitemap.xml
+```
+
+## Deploying
+
+`npm run build` produces a static-ready bundle. Host it anywhere that serves a
+Node/TanStack Start app or static files, point the `wavesos.org` DNS at it, and
+the `public/` folder ships `robots.txt` and `sitemap.xml` automatically.
+
+## Getting found on Google
+
+See **[INDEXING.md](INDEXING.md)** — step-by-step, no cost, covers Google Search
+Console, Bing, sitemaps, and what actually makes a new domain rank.

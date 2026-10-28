@@ -12,4 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // Allow serving on any hostname so tunnels (cloudflared, ngrok, etc.) work
+    // with `npm run dev` without a "Blocked request ... not allowed" error.
+    server: {
+      allowedHosts: true,
+    },
+  },
 });

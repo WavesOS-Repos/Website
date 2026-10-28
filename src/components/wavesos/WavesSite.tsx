@@ -35,6 +35,7 @@ const DISCORD_URL = 'https://discord.gg/y3p9J4z75';
 const REDDIT_URL = 'https://www.reddit.com/r/WavesOS/';
 const DOWNLOAD_FILENAME = localArchiveFilename ?? undefined;
 const WALLPAPER_WEBP_URL = `${import.meta.env.BASE_URL}wavesos-wallpaper.webp`;
+const WALLPAPER_BASE = `${import.meta.env.BASE_URL}wavesos-wallpaper`;
 const WALLPAPER_JPEG_URL = `${import.meta.env.BASE_URL}wavesos-wallpaper.jpg`;
 const LOGO_URL = `${import.meta.env.BASE_URL}wavesos-logo.jpg`;
 
@@ -84,7 +85,7 @@ function Home() {
     <main className="site-shell">
       <header className="topbar">
         <div className="container nav-inner">
-          <a className="brand" href="#top" aria-label="WavesOS home" data-testid="link-home" onClick={closeMenu}>
+          <a className="brand" href="#top" data-testid="link-home" onClick={closeMenu}>
             <img src={LOGO_URL} alt="" width={38} height={38} />
             <span>WavesOS<small>ARCH / HYPRLAND</small></span>
           </a>
@@ -115,8 +116,9 @@ function Home() {
 
       <section className="hero container" id="top">
         <picture className="hero-wallpaper" aria-hidden="true">
-          <source srcSet={WALLPAPER_WEBP_URL} type="image/webp" />
-          <img src={WALLPAPER_JPEG_URL} alt="" width={1024} height={576} fetchPriority="high" decoding="async" />
+          <source type="image/webp" sizes="100vw"
+            srcSet={`${WALLPAPER_BASE}-640.webp 640w, ${WALLPAPER_BASE}-960.webp 960w, ${WALLPAPER_BASE}-1280.webp 1280w, ${WALLPAPER_WEBP_URL} 2048w`} />
+          <img src={WALLPAPER_JPEG_URL} alt="" width={1024} height={576} fetchPriority="high" />
         </picture>
         <div className="hero-content">
           <div className="eyebrow"><i className="live-dot" /> An Arch + Hyprland desktop, brought together</div>
@@ -342,7 +344,7 @@ function Home() {
         <div className="closing-panel">
           <div className="closing-orbit" aria-hidden="true"><span>W</span></div>
           <div className="closing-copy">
-            <div className="eyebrow">wavesos.live / make it yours</div>
+            <div className="eyebrow">wavesos.org / make it yours</div>
             <h2>Hyprland,<br />finished.</h2>
             <p>Start with the installer. Shape the desktop around you.</p>
           </div>
@@ -367,7 +369,7 @@ function Home() {
             <a className="social-link" href={REDDIT_URL} {...external} aria-label="WavesOS Reddit community" title="Reddit" data-testid="link-reddit"><SiReddit aria-hidden="true" /><span>Reddit</span></a>
             <a className="social-link" href={SOURCE_URL} {...external} aria-label="WavesHyprland on GitHub" title="GitHub" data-testid="link-github-source"><SiGithub aria-hidden="true" /><span>GitHub</span></a>
           </div>
-          <a className="footer-domain" href="https://wavesos.live" {...external}>wavesos.live <ArrowUpRight size={12} /></a>
+          <a className="footer-domain" href="https://wavesos.org" {...external}>wavesos.org <ArrowUpRight size={12} /></a>
         </div>
       </footer>
     </main>
