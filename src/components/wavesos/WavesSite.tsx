@@ -24,7 +24,8 @@ import {
 } from 'lucide-react';
 import { SiDiscord, SiGithub, SiReddit } from 'react-icons/si';
 import { localArchiveFilename } from './download-source';
-import { previews } from './preview-manifest';
+import { DesktopPreview } from './DesktopPreview';
+import { Button } from '@/components/ui/button';
 
 const GITHUB_ZIP_URL = 'https://github.com/WavesOS-Repos/WavesHyprland/archive/refs/heads/main.zip';
 const ZIP_URL = localArchiveFilename
@@ -97,11 +98,11 @@ function Home() {
             <a href="#faq" onClick={closeMenu}>FAQ</a>
           </nav>
           <div className="nav-actions">
-            <button className="theme-toggle" type="button" onClick={toggleTheme}
+            <Button variant="ghost" size="icon" className="theme-toggle" type="button" onClick={toggleTheme}
               aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
               title={`Switch to ${isDark ? 'light' : 'dark'} theme`} data-testid="button-theme-toggle">
               {isDark ? <Sun size={17} /> : <Moon size={17} />}
-            </button>
+            </Button>
             <a className="button small nav-download" href={ZIP_URL} download={DOWNLOAD_FILENAME} data-testid="link-download-nav">
               Download <ArrowDownToLine size={15} />
             </a>
@@ -198,29 +199,9 @@ function Home() {
             </article>
           </div>
         </div>
-        <div className="gallery-intro">
-          <span className="eyebrow">A closer look</span>
-          <p>Six screenshot slots · WebP or AVIF, 1200 × 750 · add them in <code>public/previews</code></p>
-        </div>
-        <div className="preview-gallery" aria-label="WavesOS desktop preview gallery">
-          {previews.map((preview, index) => (
-            <figure className={`preview-card preview-card-${index + 1}`} key={preview.label}>
-              {preview.file ? (
-                <img className="preview-image" src={`${import.meta.env.BASE_URL}previews/${preview.file}`}
-                  alt={`${preview.label} screenshot of the WavesOS desktop`} width={1200} height={750}
-                  loading="lazy" decoding="async" />
-              ) : (
-                <div className="preview-empty" aria-label={`${preview.label} preview placeholder. Add an image in public/previews.`}>
-                  <span className="placeholder-index">0{index + 1}</span>
-                  <span className="placeholder-title">{preview.label}</span>
-                  <span className="placeholder-note">Screenshot slot / replace in public/previews</span>
-                </div>
-              )}
-              <figcaption className="preview-caption">{preview.label}</figcaption>
-            </figure>
-          ))}
-        </div>
       </section>
+
+      <DesktopPreview />
 
       <section className="section stack-section" id="stack">
         <div className="container">
