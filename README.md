@@ -10,6 +10,25 @@ Open your project in the [Lovable editor](https://lovable.dev) and keep building
 - **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
 - **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
 
+## Running on Ubuntu (production)
+
+```sh
+git clone https://github.com/WavesOS-Repos/Website
+cd Website
+npm install
+npm run build
+npm run start
+```
+
+The site is served on **port 8080**. To change the port or bind address:
+
+```sh
+PORT=3000 HOST=0.0.0.0 npm run start
+```
+
+`npm run build` produces a production Node.js server under `.output/`.
+`npm run start` runs it — no Vite dev client, no react-refresh, no CDN required.
+
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Images } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { previews } from './preview-manifest';
@@ -9,6 +9,21 @@ export function DesktopPreview({ media = previews }: { media?: PreviewMedia[] })
   const [direction, setDirection] = useState(1);
   const [failedSource, setFailedSource] = useState<string | null>(null);
   const item = media[index] ?? media[0];
+
+  useEffect(() => {
+    const linkEls: HTMLLinkElement[] = [];
+    for (const m of media) {
+      if (m.kind !== 'image') continue;
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = m.src;
+      document.head.appendChild(link);
+      linkEls.push(link);
+    }
+    return () => { linkEls.forEach((el) => el.remove()); };
+  }, [media]);
+
   const move = (step: number) => {
     setDirection(step);
     setIndex((current) => nextPreviewIndex(current, step, media.length));
@@ -39,7 +54,7 @@ export function DesktopPreview({ media = previews }: { media?: PreviewMedia[] })
               ) : (
                 <Button variant="ghost" className="desktop-preview-picture" aria-label="Next desktop preview"
                   title="Next desktop preview" onClick={() => move(1)} disabled={media.length < 2}>
-                  <img className="desktop-preview-media" src={item.src} alt={item.label} decoding="async"
+                  <img className="desktop-preview-media" src={item.src} alt={item.label} decoding="async" loading="eager"
                     onError={() => setFailedSource(item.src)} />
                 </Button>
               )}

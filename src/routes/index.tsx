@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import WavesSite from "@/components/wavesos/WavesSite";
+import { previews } from "@/components/wavesos/preview-manifest";
 
 const TITLE = "WavesOS — Arch Linux + Hyprland Rice & Installer";
 const DESC =
@@ -58,7 +59,13 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://wavesos.org/" },
-      { rel: "preload", as: "image", href: "/wavesos-wallpaper-1280.webp", type: "image/webp" },
+      { rel: "preload", as: "image", href: "/wavesos-wallpaper-1280.webp", type: "image/webp", fetchPriority: "high" },
+      ...previews.filter((p) => p.kind === "image").map((p) => ({
+        rel: "preload" as const,
+        as: "image" as const,
+        href: p.src,
+        type: "image/webp",
+      })),
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],
   }),
