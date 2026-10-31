@@ -12,3 +12,4 @@
 - Theme state belongs only on the document html element; body inherits its tokens so light mode cannot be overridden by a nested dark class.
 - Desktop media is discovered by Vite globs from src/assets/desktop-previews, including CDN .asset.json pointers; this keeps the gallery automatic and static without a directory-listing backend.
 - WavesOS text colors use --site-muted, separate from the design system's --muted surface token, to prevent invalid CSS color values.
+

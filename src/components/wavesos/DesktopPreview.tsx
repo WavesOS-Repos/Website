@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, Images } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { previews } from './preview-manifest';
+import { previewCategories } from './preview-manifest';
 import { nextPreviewIndex, type PreviewMedia } from './preview-media';
 
-export function DesktopPreview({ media = previews }: { media?: PreviewMedia[] }) {
+type Category = { name: string; media: PreviewMedia[] };
+
+export function DesktopPreview({ media: mediaProp, categories = previewCategories }: { media?: PreviewMedia[]; categories?: Category[] }) {
+  const [category, setCategory] = useState(0);
+  const media = mediaProp ?? categories[category]?.media ?? [];
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [failedSource, setFailedSource] = useState<string | null>(null);
@@ -35,6 +39,17 @@ export function DesktopPreview({ media = previews }: { media?: PreviewMedia[] })
         <h2 id="desktop-preview-heading">Take a look</h2>
         <span className="eyebrow">WavesOS / In motion</span>
       </div>
+      {!mediaProp && categories.length > 1 && (
+        <div className="preview-categories" role="tablist" aria-label="Preview categories">
+          {categories.map((c, i) => (
+            <button key={c.name} type="button" role="tab" aria-selected={i === category}
+              className={`preview-category${i === category ? ' active' : ''}`}
+              onClick={() => { setCategory(i); setIndex(0); setFailedSource(null); }}>
+              {c.name}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="desktop-preview" role="region" aria-roledescription="carousel" aria-label="WavesOS desktop media"
         onKeyDown={(event) => {
           if ((event.target as HTMLElement).tagName === 'VIDEO') return;
@@ -60,7 +75,7 @@ export function DesktopPreview({ media = previews }: { media?: PreviewMedia[] })
               )}
             </div>
           ) : (
-            <div className="desktop-preview-empty"><Images size={32} /><p>Desktop previews coming soon</p></div>
+            <div className="desktop-preview-empty"><Images size={32} /><p>{mediaProp ? 'Desktop' : categories[category]?.name ?? 'Desktop'} previews coming soon</p></div>
           )}
         </div>
         <div className="desktop-preview-toolbar">

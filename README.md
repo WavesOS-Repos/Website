@@ -49,7 +49,7 @@ npm run dev
 
 ## Desktop preview media
 
-Add screenshots, GIFs, and videos to **`src/assets/desktop-previews/`**. They automatically appear in the single “Take a look” gallery above the toolkit section; no manual list is needed. The folder starts empty because no desktop screenshots or recordings have been supplied.
+Add screenshots, GIFs, and videos to **`src/assets/desktop-previews/`**. They automatically appear in the single "Take a look" gallery above the toolkit section; no manual list is needed. The folder starts empty because no desktop screenshots or recordings have been supplied.
 
 - Supported images: JPG, JPEG, PNG, WebP, AVIF, GIF.
 - Supported videos: MP4, WebM, OGG/OGV, MOV. Use MP4 (H.264) or WebM for reliable browser playback; MOV depends on its codec and the browser.
@@ -61,3 +61,4 @@ lovable-assets create --file /tmp/01-desktop.webp --filename 01-desktop.webp > s
 ```
 
 Local source media files are also discovered. When adding media to an already published site, publish the updated version to include the new files. Click an image to advance; arrows work for all media, and videos keep their own playback controls.
+

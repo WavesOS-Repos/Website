@@ -54,3 +54,14 @@ describe('Theme preference', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 });
+describe('Preview categories', () => {
+  it('switches the gallery to the clicked category', () => {
+    render(<DesktopPreview categories={[
+      { name: 'Desktop', media: [{ src: '/d.png', label: 'Desk', kind: 'image' }] },
+      { name: 'Hyprland', media: [{ src: '/h.png', label: 'Hypr', kind: 'image' }] },
+    ]} />);
+    expect(screen.getByRole('img', { name: 'Desk' })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('tab', { name: 'Hyprland' }));
+    expect(screen.getByRole('img', { name: 'Hypr' })).toHaveAttribute('src', '/h.png');
+  });
+});

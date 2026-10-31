@@ -525,3 +525,8 @@ body { font-family: var(--font-sans); transition: background-color .3s, color .3
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+.preview-categories { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+.preview-category { background: transparent; border: 1px solid var(--line); color: var(--site-muted); font: 11px/1 var(--font-mono); letter-spacing: .04em; padding: 9px 14px; border-radius: 999px; cursor: pointer; transition: .2s; }
+.preview-category:hover { color: var(--ink); border-color: var(--cyan); }
+.preview-category.active { color: var(--cyan); border-color: var(--cyan); }
