@@ -25,7 +25,8 @@ import {
 import { SiDiscord, SiGithub, SiReddit } from 'react-icons/si';
 import { localArchiveFilename } from './download-source';
 import { DesktopPreview } from './DesktopPreview';
-import { useRevealOnScroll, useScrollTilt } from './use-motion';
+import { useScrollTilt } from './use-motion';
+import { AtomOrbit } from './AtomOrbit';
 import { Button } from '@/components/ui/button';
 
 const GITHUB_ZIP_URL = 'https://github.com/WavesOS-Repos/WavesHyprland/archive/refs/heads/main.zip';
@@ -57,7 +58,6 @@ function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const heroStageRef = useRef<HTMLDivElement>(null);
   useScrollTilt(heroStageRef);
-  useRevealOnScroll();
 
   useEffect(() => {
     let dark = true;
@@ -246,23 +246,7 @@ function Home() {
             </a>
             <div className="install-note"><span className="install-note-icon"><Check size={14} /></span><p>Run as a normal user. <strong>Do not launch with sudo.</strong> The installer requests elevated access only for steps that need it.</p></div>
           </div>
-          <div className="terminal" aria-label="Installation commands" data-reveal>
-            <div className="terminal-top">
-              <span className="terminal-dots"><i /><i /><i /></span>
-              <span>bash <b>/</b> WavesHyprland</span>
-              <span className="terminal-lock">INSTALL</span>
-            </div>
-            <div className="terminal-body">
-              <div className="terminal-comment"># Enter the project directory</div>
-              <div className="term-code"><span className="term-prompt">$</span> cd WavesHyprland</div>
-              <div className="term-code"><span className="term-prompt">$</span> chmod +x install.sh scripts/*.sh</div>
-              <div className="terminal-comment terminal-comment-gap"># Guided installer menu</div>
-              <div className="term-code"><span className="term-prompt">$</span> ./install.sh</div>
-              <div className="terminal-comment terminal-comment-gap"># Or select the complete setup</div>
-              <div className="term-code"><span className="term-prompt">$</span> ./install.sh --all</div>
-            </div>
-            <div className="terminal-note"><span className="terminal-status"><i /> Ready when you are</span><span>normal user · sudo when needed</span></div>
-          </div>
+          <AtomOrbit />
         </div>
       </section>
 
