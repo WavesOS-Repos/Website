@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type React from 'react';
 import {
   ArrowDownToLine,
@@ -25,7 +25,6 @@ import {
 import { SiDiscord, SiGithub, SiReddit } from 'react-icons/si';
 import { localArchiveFilename } from './download-source';
 import { DesktopPreview } from './DesktopPreview';
-import { useScrollTilt } from './use-motion';
 import { AtomOrbit } from './AtomOrbit';
 import { Button } from '@/components/ui/button';
 
@@ -56,8 +55,6 @@ const faqs: { q: string; a: React.ReactNode; source?: boolean }[] = [
 function Home() {
   const [isDark, setIsDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  const heroStageRef = useRef<HTMLDivElement>(null);
-  useScrollTilt(heroStageRef);
 
   useEffect(() => {
     let dark = true;
@@ -145,13 +142,7 @@ function Home() {
             <span><Command size={13} /> You stay in control</span>
           </div>
         </div>
-        <div className="hero-3d" ref={heroStageRef} aria-hidden="true">
-          <div className="hero-3d-scene">
-            <span className="hero-3d-layer hero-3d-back" style={{ '--z': -120 } as React.CSSProperties} />
-            <span className="hero-3d-layer hero-3d-window" style={{ '--z': 0 } as React.CSSProperties}><i /><i /><i /><i /></span>
-            <span className="hero-3d-layer hero-3d-bar" style={{ '--z': 110 } as React.CSSProperties} />
-          </div>
-        </div>
+        <div className="hero-atom"><AtomOrbit /></div>
         <div className="hero-aside"><span>01</span><i /> A desktop in sync</div>
         <div className="hero-index">WAVESOS / 2025</div>
       </section>
@@ -246,7 +237,23 @@ function Home() {
             </a>
             <div className="install-note"><span className="install-note-icon"><Check size={14} /></span><p>Run as a normal user. <strong>Do not launch with sudo.</strong> The installer requests elevated access only for steps that need it.</p></div>
           </div>
-          <AtomOrbit />
+          <div className="terminal" aria-label="Installation commands">
+            <div className="terminal-top">
+              <span className="terminal-dots"><i /><i /><i /></span>
+              <span>bash <b>/</b> WavesHyprland</span>
+              <span className="terminal-lock">INSTALL</span>
+            </div>
+            <div className="terminal-body">
+              <div className="terminal-comment"># Enter the project directory</div>
+              <div className="term-code"><span className="term-prompt">$</span> cd WavesHyprland</div>
+              <div className="term-code"><span className="term-prompt">$</span> chmod +x install.sh scripts/*.sh</div>
+              <div className="terminal-comment terminal-comment-gap"># Guided installer menu</div>
+              <div className="term-code"><span className="term-prompt">$</span> ./install.sh</div>
+              <div className="terminal-comment terminal-comment-gap"># Or select the complete setup</div>
+              <div className="term-code"><span className="term-prompt">$</span> ./install.sh --all</div>
+            </div>
+            <div className="terminal-note"><span className="terminal-status"><i /> Ready when you are</span><span>normal user · sudo when needed</span></div>
+          </div>
         </div>
       </section>
 

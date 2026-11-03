@@ -6,7 +6,7 @@ export function AtomOrbit() {
   useScrollTilt(ref);
 
   return (
-    <div className="atom" ref={ref} aria-hidden="true" data-reveal>
+    <div className="atom" ref={ref} aria-hidden="true">
       <div className="atom-scene">
         <span className="atom-core" />
         <span className="atom-ring atom-ring-x"><i /></span>
