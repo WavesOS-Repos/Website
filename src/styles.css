@@ -530,3 +530,31 @@ body { font-family: var(--font-sans); transition: background-color .3s, color .3
 .preview-category { background: transparent; border: 1px solid var(--line); color: var(--site-muted); font: 11px/1 var(--font-mono); letter-spacing: .04em; padding: 9px 14px; border-radius: 999px; cursor: pointer; transition: .2s; }
 .preview-category:hover { color: var(--ink); border-color: var(--cyan); }
 .preview-category.active { color: var(--cyan); border-color: var(--cyan); }
+
+:root { --ease-out: cubic-bezier(.2, .7, .25, 1); }
+[data-reveal] { opacity: 0; translate: 0 36px; transition: opacity .9s var(--ease-out), translate .9s var(--ease-out), background-color .25s, transform .25s; }
+[data-reveal].is-visible { opacity: 1; translate: 0 0; }
+[data-reveal="lines"] { opacity: 1; translate: none; transition: none; }
+[data-reveal="lines"] .line { display: block; opacity: 0; translate: 0 45%; transition: opacity .9s var(--ease-out), translate .9s var(--ease-out); }
+[data-reveal="lines"] .line:nth-child(2) { transition-delay: .12s; }
+[data-reveal="lines"].is-visible .line { opacity: 1; translate: 0 0; }
+
+.hero-content { position: relative; z-index: 1; }
+@media (min-width: 1100px) { .hero-content { max-width: 640px; } }
+.hero-3d { --scroll: .5; position: absolute; z-index: 0; top: 50%; right: 56px; width: min(420px, 34vw); aspect-ratio: 1.2; translate: 0 -50%; perspective: 1200px; pointer-events: none; }
+.hero-3d-scene { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(calc(14deg - var(--scroll) * 20deg)) rotateY(calc(-26deg + var(--scroll) * 40deg)); transition: transform .6s var(--ease-out); will-change: transform; }
+.hero-3d-layer { position: absolute; border: 1px solid color-mix(in srgb, var(--cyan) 38%, transparent); border-radius: 10px; box-shadow: 0 30px 70px rgba(2, 14, 24, .35); transform: translateZ(calc(var(--z) * 1px)); overflow: hidden; }
+.hero-3d-back { inset: 0; background: #082536 url('/wavesos-wallpaper.webp') center / cover; opacity: .75; }
+.hero-3d-window { inset: 12% 14% 22% 0; padding: 18px; display: flex; flex-direction: column; gap: 11px; background: color-mix(in srgb, var(--surface) 88%, transparent); }
+.hero-3d-window i { display: block; height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--cyan) 28%, transparent); }
+.hero-3d-window i:first-child { width: 40%; background: var(--cyan); }
+.hero-3d-window i:nth-child(3) { width: 72%; }
+.hero-3d-window i:nth-child(4) { width: 54%; }
+.hero-3d-bar { inset: auto 6% 9% 22%; height: 26px; border-radius: 6px; background: var(--code); }
+
+.closing-orbit::before { border-top-color: var(--cyan); animation: orbit-spin 24s linear infinite; }
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 850px) {
+  .hero-3d { display: none; }
+}

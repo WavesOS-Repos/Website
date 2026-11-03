@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
 import {
   ArrowDownToLine,
@@ -25,6 +25,7 @@ import {
 import { SiDiscord, SiGithub, SiReddit } from 'react-icons/si';
 import { localArchiveFilename } from './download-source';
 import { DesktopPreview } from './DesktopPreview';
+import { useRevealOnScroll, useScrollTilt } from './use-motion';
 import { Button } from '@/components/ui/button';
 
 const GITHUB_ZIP_URL = 'https://github.com/WavesOS-Repos/WavesHyprland/archive/refs/heads/main.zip';
@@ -54,6 +55,9 @@ const faqs: { q: string; a: React.ReactNode; source?: boolean }[] = [
 function Home() {
   const [isDark, setIsDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const heroStageRef = useRef<HTMLDivElement>(null);
+  useScrollTilt(heroStageRef);
+  useRevealOnScroll();
 
   useEffect(() => {
     let dark = true;
@@ -141,6 +145,13 @@ function Home() {
             <span><Command size={13} /> You stay in control</span>
           </div>
         </div>
+        <div className="hero-3d" ref={heroStageRef} aria-hidden="true">
+          <div className="hero-3d-scene">
+            <span className="hero-3d-layer hero-3d-back" style={{ '--z': -120 } as React.CSSProperties} />
+            <span className="hero-3d-layer hero-3d-window" style={{ '--z': 0 } as React.CSSProperties}><i /><i /><i /><i /></span>
+            <span className="hero-3d-layer hero-3d-bar" style={{ '--z': 110 } as React.CSSProperties} />
+          </div>
+        </div>
         <div className="hero-aside"><span>01</span><i /> A desktop in sync</div>
         <div className="hero-index">WAVESOS / 2025</div>
       </section>
@@ -162,11 +173,11 @@ function Home() {
         <div className="section-heading">
           <div>
             <div className="eyebrow">02 / Why WavesOS</div>
-            <h2>A desktop is more<br />than its windows.</h2>
+            <h2 data-reveal="lines"><span className="line">A desktop is more</span><span className="line">than its windows.</span></h2>
           </div>
           <p>Most setups stop at the compositor. WavesOS connects the details around it—so your colors, controls and daily tools feel like parts of the same place.</p>
         </div>
-        <aside className="manifesto-panel" aria-label="The WavesOS manifesto">
+        <aside className="manifesto-panel" aria-label="The WavesOS manifesto" data-reveal>
           <blockquote className="manifesto-quote">
             “Made to be shown off. <span>Built to disappear.”</span>
           </blockquote>
@@ -175,7 +186,7 @@ function Home() {
             <p>One wallpaper sets the tone. Matugen, Waybar, Rofi, terminal, and lock screens follow. You’re free to dig into the configs; you shouldn’t have to in order to get a desktop that matches.</p>
           </div>
         </aside>
-        <div className="feature-layout">
+        <div className="feature-layout" data-reveal>
           <div className="feature-visual" role="img" aria-label="WavesOS desktop preview showing wallpaper-led desktop styling">
             <div className="visual-grid" aria-hidden="true"><span>W / 01</span><span>COLOR, IN MOTION</span></div>
             <div className="visual-label">WavesOS / desktop system<b>Everything in its element.</b></div>
@@ -208,11 +219,11 @@ function Home() {
           <div className="section-heading">
             <div>
               <div className="eyebrow">03 / The toolkit</div>
-              <h2>Separate tools.<br />One visual logic.</h2>
+              <h2 data-reveal="lines"><span className="line">Separate tools.</span><span className="line">One visual logic.</span></h2>
             </div>
             <p>A wallpaper-led system works because each layer has a job. WavesHyprland installs the pieces and gives them a shared language.</p>
           </div>
-          <div className="stack-grid">
+          <div className="stack-grid" data-reveal>
             <article className="stack-item"><span className="stack-number">01 / THE CANVAS</span><h3>Hyprland + Lua</h3><p>A configurable Wayland compositor with a workflow shaped around it.</p></article>
             <article className="stack-item"><span className="stack-number">02 / THE PALETTE</span><h3>Matugen + Wallfliper</h3><p>Wallpaper rotation and generated colors, carried through the system.</p></article>
             <article className="stack-item"><span className="stack-number">03 / THE STATUS</span><h3>Waybar</h3><p>Multiple layouts and a layout switcher, with styles driven by the active Matugen colors.</p></article>
@@ -228,14 +239,14 @@ function Home() {
         <div className="install-layout">
           <div className="install-copy">
             <div className="eyebrow">04 / Start with a clean Arch install</div>
-            <h2>Your system.<br />Your call.</h2>
+            <h2 data-reveal="lines"><span className="line">Your system.</span><span className="line">Your call.</span></h2>
             <p>Download or clone <code>WavesHyprland</code>, review the README, then run the installer from its directory.</p>
             <a className="button outline" href={SOURCE_URL} {...external} data-testid="link-inspect-source">
               Read the install notes <ArrowUpRight size={15} />
             </a>
             <div className="install-note"><span className="install-note-icon"><Check size={14} /></span><p>Run as a normal user. <strong>Do not launch with sudo.</strong> The installer requests elevated access only for steps that need it.</p></div>
           </div>
-          <div className="terminal" aria-label="Installation commands">
+          <div className="terminal" aria-label="Installation commands" data-reveal>
             <div className="terminal-top">
               <span className="terminal-dots"><i /><i /><i /></span>
               <span>bash <b>/</b> WavesHyprland</span>
@@ -260,11 +271,11 @@ function Home() {
           <div className="section-heading">
             <div>
               <div className="eyebrow">05 / The heart of Hyprland</div>
-              <h2>Simple<br />on purpose.</h2>
+              <h2 data-reveal="lines"><span className="line">Simple</span><span className="line">on purpose.</span></h2>
             </div>
             <p>Hyprland is a modern Wayland compositor built on one idea: you shape the desktop through configuration you can read. WavesOS respects that.</p>
           </div>
-          <aside className="manifesto-panel heart-panel" aria-label="The WavesOS philosophy">
+          <aside className="manifesto-panel heart-panel" aria-label="The WavesOS philosophy" data-reveal>
             <blockquote className="manifesto-quote">
               “Less setup. <span>Nothing hidden.”</span>
             </blockquote>
@@ -274,7 +285,7 @@ function Home() {
               <p className="heart-result">A desktop that’s convenient for everyday work—and still yours.</p>
             </div>
           </aside>
-          <div className="pillar-grid">
+          <div className="pillar-grid" data-reveal>
             <article className="stack-item pillar">
               <span className="stack-number">01 / <FileCode2 size={13} /></span>
               <h3>Readable configs</h3>
@@ -298,11 +309,11 @@ function Home() {
         <div className="section-heading">
           <div>
             <div className="eyebrow">06 / Common questions</div>
-            <h2>Before you<br />install.</h2>
+            <h2 data-reveal="lines"><span className="line">Before you</span><span className="line">install.</span></h2>
           </div>
           <p>Straight answers about what WavesOS is, what it isn’t, and how it fits into your Arch system.</p>
         </div>
-        <div className="faq-list">
+        <div className="faq-list" data-reveal>
           {faqs.map((faq, index) => (
             <details className="faq-item" key={faq.q} open={index === 0}>
               <summary>
@@ -322,11 +333,11 @@ function Home() {
       </section>
 
       <section className="closing container">
-        <div className="closing-panel">
+        <div className="closing-panel" data-reveal>
           <div className="closing-orbit" aria-hidden="true"><span>W</span></div>
           <div className="closing-copy">
             <div className="eyebrow">wavesos.org / make it yours</div>
-            <h2>Hyprland,<br />finished.</h2>
+            <h2 data-reveal="lines"><span className="line">Hyprland,</span><span className="line">finished.</span></h2>
             <p>Start with the installer. Shape the desktop around you.</p>
           </div>
           <div className="closing-action">
